@@ -19,7 +19,9 @@ for i in range(SIZE):
 
 for r in range(SIZE):
     for o in range(SIZE):
-        os.system(f'escript bst.erl {KeyRanges[r]} {Operations[o]}')
+        val = subprocess.check_output(f'escript bst.erl {KeyRanges[r]} {Operations[o]}'. shell=True)
+        val = int(val)
+        result[r][o] = val
 
 plt.imshow(result, cmap='hot', interpolation='nearest')
 plt.savefig('result.png')
