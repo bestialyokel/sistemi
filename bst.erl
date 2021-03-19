@@ -70,9 +70,9 @@ nodeState(Node) ->
             contains(Key, Node, Requester);
             %nodeState(Node);
         {insert, Key} ->
-            nodeState(insert(Key, Node));
+            insert(Key, Node);
         {delete, Key} ->
-            nodeState(delete(Key, Node));
+            delete(Key, Node);
         {node, Requester} ->
             Requester ! Node;
             %nodeState(Node);
