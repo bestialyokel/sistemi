@@ -19,7 +19,7 @@ for i in range(SIZE):
 
 for r in range(SIZE):
     for o in range(SIZE):
-        val = subprocess.check_output(f'escript bst.erl {KeyRanges[r]} {Operations[o]}'. shell=True)
+        val = subprocess.check_output(f'escript bst.erl {KeyRanges[r]} {Operations[o]}', shell=True)
         val = int(val)
         result[r][o] = val
 
