@@ -27,8 +27,15 @@ ax = fig.add_subplot(111, projection='3d')
 
 X, Y = np.meshgrid(oxy, oxy)
 
-ax.plot_surface(X, Y, np.array(Lines), cmap='inferno', interpolation='nearest')
+ax.plot_surface(X, Y, np.array(Lines), cmap='inferno')
 ax.legend()
+
+#plt.xticks(oxy)
+#plt.yticks(oxy)
+
+
+plt.xlabel("KeyRange")
+plt.ylabel("Operations")
 
 
 plt.show()
