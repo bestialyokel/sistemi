@@ -6,8 +6,8 @@ TESTS = 1
 
 nums = np.arange(1000, 100000, 1000)
 
-
 FILENAME = "result"
+
 
 
 with open(FILENAME, "a") as file:

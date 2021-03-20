@@ -67,18 +67,20 @@ rpcDump(Pid) ->
 nodeState(Node) ->
     receive
         {contains, Key, Requester} ->
-            contains(Key, Node, Requester);
-            %nodeState(Node);
+            contains(Key, Node, Requester),
+            nodeState(Node);
         {insert, Key} ->
-            insert(Key, Node);
+            insert(Key, Node),
+            nodeState(Node);
         {delete, Key} ->
-            delete(Key, Node);
+            delete(Key, Node),
+            nodeState(Node);
         {node, Requester} ->
-            Requester ! Node;
-            %nodeState(Node);
+            Requester ! Node,
+            nodeState(Node);
         {dump, Requester} ->
-            dump(Node, Requester)
-            %nodeState(Node)
+            dump(Node, Requester),
+            nodeState(Node)
     end.
 
 
@@ -110,30 +112,24 @@ relayContain(_, nil, Requester) ->
     Requester ! false;
 relayContain(Key, NodePid, Requester) ->
     NodePid ! {contains, Key, Requester}.
+
+
 insert(Knew, {Key, PidLeft, PidRight}) when Knew < Key ->
     {Key, rpcInsert(Knew, PidLeft), PidRight};
 insert(Knew, {Key, PidLeft, PidRight}) when Knew > Key ->
     {Key, PidLeft, rpcInsert(Knew, PidRight)};
 insert(Key, {Key, PidLeft, PidRight}) ->
     {Key, PidLeft, PidRight};
-
-
-% Inserting into a node whose state is nil, it takes on the key
 insert(Key, nil) ->
     {Key, nil, nil}.
+
+
+
 delete(Kdel, {Key, PidLeft, PidRight}) when Kdel < Key ->
     {Key, rpcDelete(Kdel, PidLeft), PidRight};
 delete(Kdel, {Key, PidLeft, PidRight}) when Kdel > Key ->
     {Key, PidLeft, rpcDelete(Kdel, PidRight)};
 
-
-% There's the possibility of having a node who's state is "nil"
-% I've decided to take the lazy approach and leave such leaves, only to prune
-% them when neccessary
-%
-% Three possibilities; left is a process with a nil state, right is a process
-% with a nil state, or neither, which means I need to find the maximum node
-% in the left
 delete(Key, {Key, PidLeft, PidRight}) ->
     NodeLeft = getNode(PidLeft),
     NodeRight = getNode(PidRight),

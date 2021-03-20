@@ -8,26 +8,30 @@ FILENAME = "result"
 result = open(FILENAME, 'r')
 Lines = result.readlines()
 
-matrix = [None]*99
-for i in range(99):
-    matrix[i] = [0]* 99
+SIZE = 99
 
-oxy = np.arange(1000, 99000, 1000)
+matrix = [None] * SIZE
+for i in range(SIZE):
+    matrix[i] = [0] * SIZE
 
-for i in range(99):
+oxy = np.arange(1000, 100000, 10000)
+
+for i in range(SIZE):
     Lines[i] = Lines[i].split(',')
     Lines[i].pop()
     for j in range(len(Lines[i])):
         Lines[i][j] = float(Lines[i][j])
 
-plt.xticks(oxy)
-plt.yticks(oxy)
 
 plt.xlabel("KeyRange")
 plt.ylabel("Operations")
 
 plt.imshow(Lines, cmap='hot')
 
-axes = plt.gca()
-axes.invert_yaxis()
-plt.show()
+
+plt.gca().invert_yaxis()
+
+plt.savefig('result.png')
+
+
+

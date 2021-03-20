@@ -38,7 +38,7 @@ plt.xlabel("KeyRange")
 plt.ylabel("Operations")
 
 
-plt.show()
+plt.savefig('result1.png')
 
 
 #axes = plt.gca()
