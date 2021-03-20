@@ -1,27 +1,26 @@
 import os, subprocess
-import matplotlib.pyplot as plt
 import numpy as np
 
 
-KeyRanges = [];
-Operations = [];
+TESTS = 1
 
-SIZE = 100
+nums = np.arange(1000, 100000, 1000)
 
-for i in range(SIZE):
-   KeyRanges.append(250 + 250*i)
-   Operations.append(250 + 250*i)
 
-#MATRIX
-result = [None] * SIZE
-for i in range(SIZE):
-    result[i] = [i] * SIZE
+FILENAME = "result"
 
-for r in range(SIZE):
-    for o in range(SIZE):
-        val = subprocess.check_output(f'escript bst.erl {KeyRanges[r]} {Operations[o]}', shell=True)
-        val = int(val)
-        result[r][o] = val
 
-plt.imshow(result, cmap='hot', interpolation='nearest')
-plt.savefig('result.png')
+with open(FILENAME, "a") as file:
+    for r in nums:
+        for o in nums:
+            sum = 0
+            for i in range(TESTS):
+                val = subprocess.check_output(f'escript bst.erl {r} {o}', shell=True)
+                val = int( val )
+                sum = sum + val
+
+            sum = sum/TESTS
+            file.write( str(sum) )
+            file.write(",")
+
+        file.write("\n")
