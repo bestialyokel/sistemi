@@ -23,7 +23,11 @@ for i in range(99):
 plt.xticks(oxy)
 plt.yticks(oxy)
 
+plt.xlabel("KeyRange")
+plt.ylabel("Operations")
+
 plt.imshow(Lines, cmap='hot')
 
 axes = plt.gca()
+axes.invert_yaxis()
 plt.show()
